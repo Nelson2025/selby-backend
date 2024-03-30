@@ -17,7 +17,10 @@ app.use(cors());
 var server = http.createServer(app);
 const io = new Server(server);
 
-mongoose.connect("mongodb://localhost:27017/selby");
+// mongoose.connect("mongodb://localhost:27017/selby");
+mongoose.connect(
+  "mongodb+srv://nelson2025:Nelson@2025@cluster0.pzugxtx.mongodb.net/"
+);
 
 // const ChatModel = require("./models/chat_model");
 
