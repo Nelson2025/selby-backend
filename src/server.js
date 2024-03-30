@@ -19,7 +19,7 @@ const io = new Server(server);
 
 // mongoose.connect("mongodb://localhost:27017/selby");
 mongoose.connect(
-  "mongodb+srv://nelson2025:Nelson@2025@cluster0.pzugxtx.mongodb.net/"
+  "mongodb+srv://nelson2025:9hDzNwzJgNPzdwM7@cluster0.pzugxtx.mongodb.net/"
 );
 
 // const ChatModel = require("./models/chat_model");
