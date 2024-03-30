@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 
 const connection = mongoose
-  .createConnection("mongodb://localhost:27017/selby")
+  .createConnection(
+    "mongodb+srv://nelson2025:Nelson@2025@cluster0.pzugxtx.mongodb.net/"
+  )
   .on("open", () => {
     console.log("MongoDB Connected");
   })
