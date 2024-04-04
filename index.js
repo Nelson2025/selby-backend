@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const { Server } = require("socket.io");
+const path = require("path");
 
 const app = express();
 app.use(bodyParser.json());
