@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
   res.send("Express on Vercel");
 });
 
-app.use("/uploads", express.static("./src/public/uploads"));
+app.use("/uploads", express.static("./public/uploads"));
 
 io.on("connection", (socket) => {
   console.log("CONNECTED");
