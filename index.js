@@ -6,7 +6,6 @@ const morgan = require("morgan");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const { Server } = require("socket.io");
-const path = require("path");
 
 const app = express();
 app.use(bodyParser.json());
@@ -33,8 +32,7 @@ app.get("/", (req, res) => {
   res.send("Express on Vercel");
 });
 
-app.use(express.static(path.resolve("./public")));
-app.use("/uploads", express.static(path.resolve("./public/uploads")));
+app.use("/uploads", express.static("uploads"));
 
 io.on("connection", (socket) => {
   console.log("CONNECTED");
