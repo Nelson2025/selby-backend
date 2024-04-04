@@ -123,22 +123,22 @@ io.on("connection", (socket) => {
 //   });
 // });
 
-const UserRoutes = require("./routes/user_routes");
+const UserRoutes = require("./src/routes/user_routes");
 app.use("/api/user", UserRoutes);
 
-const MsgRoutes = require("./routes/message_route");
+const MsgRoutes = require("./src/routes/message_route");
 app.use("/api/messages", MsgRoutes);
 
-const CategoryRoutes = require("./routes/category_routes");
+const CategoryRoutes = require("./src/routes/category_routes");
 app.use("/api/category", CategoryRoutes);
 
-const AutosRoutes = require("./routes/autos_route");
+const AutosRoutes = require("./src/routes/autos_route");
 app.use("/api/autos", AutosRoutes);
 
-const ProductRoutes = require("./routes/product_route");
+const ProductRoutes = require("./src/routes/product_route");
 app.use("/api/product", ProductRoutes);
 
-const PropertiesRoutes = require("./routes/properties_route");
+const PropertiesRoutes = require("./src/routes/properties_route");
 app.use("/api/properties", PropertiesRoutes);
 
 const PORT = process.env.PORT || 7000;
