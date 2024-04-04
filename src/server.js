@@ -28,6 +28,10 @@ app.route("/check").get((req, res) => {
   res.json("App is working fine");
 });
 
+app.get("/", (req, res) => {
+  res.send("Express on Vercel");
+});
+
 app.use("/uploads", express.static("uploads"));
 
 io.on("connection", (socket) => {
