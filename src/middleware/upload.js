@@ -6,8 +6,6 @@ const storage = multer.diskStorage({
     cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    // const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    //cb(null, file.fieldname + "-" + uniqueSuffix);
     let ext = path.extname(file.originalname);
     cb(null, Date.now() + ext);
   },
@@ -27,9 +25,6 @@ const upload = multer({
       console.log("Only jpg & png files supported!");
     }
   },
-  //   limits: {
-  //     fileSize: 1024 * 1024 * 6,
-  //   },
 });
 
 module.exports = upload;

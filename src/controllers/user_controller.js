@@ -1,20 +1,19 @@
 const UserModel = require("../models/user_model");
-const bcrypt = require("bcrypt");
 const otpGenerator = require("otp-generator");
 const crypto = require("crypto");
 const key = "otp-secretKey";
+var axios = require("axios");
 
 const UserController = {
   userAccount: async function (req, res) {
-    console.log("request" + req);
     try {
       const userData = req.body;
-      console.log(req.body);
+
       const foundUser = await UserModel.findOne({ phone: userData.phone });
-      console.log(foundUser);
+
       if (!foundUser) {
         const newUser = new UserModel(userData);
-        console.log(newUser);
+
         try {
           await newUser.save();
         } catch (ex) {
@@ -67,10 +66,28 @@ const UserController = {
       const hash = crypto.createHmac("sha256", key).update(data).digest("Hex");
       const fullHash = `${hash}.${expires}`;
 
-      console.log(`Your OTP is ${otp}`);
-
-      //SEND SMS//
-      //  return callback(null, fullHash);
+      //send SMS
+      axios
+        .post("http://neat.freebeesms.com/api/send/sms", {
+          campaign_name: "cam1",
+          auth_key: "867bc2deb021b4b5d4ac33ad38bdbe0b",
+          receivers: `${req.body.phone}`,
+          sender: "NEXTGT",
+          route: "TR",
+          message: {
+            msgdata: `Your SELBY one-time password (OTP) is ${otp} for registration. The validity of this code is 10 minutes. BoroNextgen`,
+            Template_ID: "1707171291431756246",
+            coding: "1",
+            flash_message: 1,
+            scheduleTime: "",
+          },
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
 
       return res.json({
         success: true,
@@ -109,7 +126,6 @@ const UserController = {
           message: "OTP Invalid",
         });
       }
-      // return callback(null, "Success");
     } catch (ex) {
       return res.json({ success: false, message: ex });
     }
@@ -143,6 +159,7 @@ const UserController = {
   fetchUserById: async function (req, res) {
     try {
       const id = req.params.id;
+
       const foundUser = await UserModel.findById(id);
 
       if (!foundUser) {
@@ -159,7 +176,6 @@ const UserController = {
   },
 
   getAllUsers: async function (req, res, next) {
-    console.log("HIOTTTTTTTTTTTT");
     try {
       const users = await Users.find({ _id: { $ne: req.userId } }).select([
         "email",
@@ -170,8 +186,6 @@ const UserController = {
       return res.json(users);
     } catch (ex) {
       return res.status(400).json({ status: false, error: ex });
-
-      next(ex);
     }
   },
 };

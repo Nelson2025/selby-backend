@@ -7,9 +7,6 @@ const MessageSchema = mongoose.Schema(
     },
     roomId: { type: String, default: "" },
     productId: { type: String, default: "" },
-    // image: {
-    //   text: { type: String },
-    // },
     users: Array,
     sender: {
       type: mongoose.Schema.Types.ObjectId,

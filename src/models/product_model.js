@@ -1,7 +1,6 @@
 const { Schema, model } = require("mongoose");
 
 const productSchema = new Schema({
-  // id: { type: String, unique: true },
   categoryId: { type: Schema.Types.ObjectId, ref: "Category", required: true },
   subcategoryId: { type: String, default: "" },
   userId: { type: Schema.Types.ObjectId, ref: "Users", required: true },
@@ -10,7 +9,6 @@ const productSchema = new Schema({
   description: { type: String, default: "" },
   price: { type: String, required: true },
   image: { type: Array, default: [] },
-  //   landmark: { type: String, default: "" },
   city: { type: String, default: "" },
   state: { type: String, default: "" },
   favourite: { type: String, default: "NO" },

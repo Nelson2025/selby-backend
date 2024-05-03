@@ -1,7 +1,6 @@
 const { Schema, model } = require("mongoose");
 
 const autosSchema = new Schema({
-  // id: { type: String, unique: true },
   categoryId: { type: Schema.Types.ObjectId, ref: "Category", required: true },
   userId: { type: Schema.Types.ObjectId, ref: "Users", required: true },
   brand: { type: String, default: "" },

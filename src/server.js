@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const { Server } = require("socket.io");
+require("./config/db");
 
 const app = express();
 app.use(bodyParser.json());
@@ -17,12 +18,9 @@ app.use(cors());
 var server = http.createServer(app);
 const io = new Server(server);
 
-// mongoose.connect("mongodb://localhost:27017/selby");
 mongoose.connect(
   "mongodb+srv://nelson2025:9hDzNwzJgNPzdwM7@cluster0.pzugxtx.mongodb.net/selby"
 );
-
-// const ChatModel = require("./models/chat_model");
 
 app.route("/check").get((req, res) => {
   res.json("App is working fine");
@@ -34,12 +32,12 @@ app.get("/", (req, res) => {
 
 app.use("/uploads", express.static("uploads"));
 
+//socket io
 io.on("connection", (socket) => {
   console.log("CONNECTED");
   global.chatSocket = socket;
 
   socket.on("add-user", (roomId) => {
-    // onlineUsers.set(userId, socket.id);
     console.log("USER CONNECTED");
     socket.join(roomId);
 
@@ -56,72 +54,7 @@ io.on("connection", (socket) => {
     console.log("DISCONNECTED");
   });
 });
-
-// const ChatRoutes = require("./routes/chat_routes");
-// app.use("/api/chat", ChatRoutes);
-
-// var clients = {};
-// var io = require("socket.io")(server, {
-//   cors: {
-//     origin: "*",
-//   },
-// });
-
-// io.on("connection", (socket) => {
-//   console.log("Connected");
-//   console.log(socket.id, "has joined");
-//   socket.on("signin", (id) => {
-//     console.log(id);
-//     clients[id] = socket;
-//     console.log(clients);
-//   });
-
-//   socket.on("message", (msg) => {
-//     console.log(msg);
-//     let receiverId = msg.receiverId;
-//     let senderId = msg.senderId;
-//     let message = msg.message;
-//     // let data = JSON({
-//     //   senderId: msg.senderId,
-//     //   receiverId: "1",
-//     //   message: msg.message,
-//     // });
-//     //sendChat.createChat(data);
-
-//     // app.route("/api/chat").post((req, res) => {
-//     //   console.log("sending");
-//     //   res.send({
-//     //     senderId: senderId,
-//     //     message: message,
-//     //   });
-//     // });
-
-//     // app.post("/api/chat", function (req, res) {
-//     //   console.log("sending");
-//     //   res.send({
-//     //     senderId: senderId,
-//     //     message: message,
-//     //   });
-//     // });
-
-//     const chat = new ChatModel({
-//       senderId: msg.senderId,
-//       receiverId: msg.receiverId,
-//       message: msg.message,
-//     });
-//     try {
-//       chat.save();
-//     } catch (ex) {
-//       // return res.json({ success: false, message: ex });
-//       console.log(ex);
-//     }
-
-//     if (clients[receiverId]) {
-//       //ChatController.createChat(data);
-//       clients[receiverId].emit("message", msg);
-//     }
-//   });
-// });
+//socket io
 
 const UserRoutes = require("./routes/user_routes");
 app.use("/api/user", UserRoutes);
@@ -132,19 +65,10 @@ app.use("/api/messages", MsgRoutes);
 const CategoryRoutes = require("./routes/category_routes");
 app.use("/api/category", CategoryRoutes);
 
-const AutosRoutes = require("./routes/autos_route");
-app.use("/api/autos", AutosRoutes);
-
 const ProductRoutes = require("./routes/product_route");
 app.use("/api/product", ProductRoutes);
 
-const PropertiesRoutes = require("./routes/properties_route");
-app.use("/api/properties", PropertiesRoutes);
-
 const PORT = process.env.PORT || 7000;
 server.listen(PORT, "0.0.0.0", () => {
-  console.log("Server Started");
+  console.log("Server Started" + PORT);
 });
-// app.listen(PORT, "0.0.0.0", () =>
-//   console.log(`Server started at PORT: ${PORT}`)
-// );

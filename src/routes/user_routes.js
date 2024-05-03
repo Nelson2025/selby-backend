@@ -6,6 +6,7 @@ userRoutes.post("/signIn", UserController.signIn);
 userRoutes.post("/createOtp", UserController.createOtp);
 userRoutes.post("/verifyOtp", UserController.verifyOtp);
 userRoutes.post("/getAllUsers", UserController.getAllUsers);
-userRoutes.post("/:id", UserController.fetchUserById);
+userRoutes.put("/updateUser/:id", UserController.updateUser);
+userRoutes.get("/:id", UserController.fetchUserById);
 
 module.exports = userRoutes;
